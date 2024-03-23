@@ -1,4 +1,5 @@
 import requests, json
+from query.stackexchange import *
 
 def query(query: str) -> str:
     return __queryTest(query)
@@ -12,25 +13,3 @@ def __queryTest(query: str) -> str:
     return "Active cases in South Andaman: " + str(active_case)
 #queryTest
 
-def __queryStack(query: str) -> str:
-    with open("examplequery.json") as f:
-        content = f.read()
-    parse_json = json.loads(content)
-    parsed = parse_json['items'][0]['tags']
-    return parsed
-#queryStack
-
-if __name__ == "__main__":
-    print(query("hi"))
-
-
-
-"""
-from stackapi import StackAPI
-
-title_search_string = 'How can I search questions by titles using the StackExchange API?'
-
-SITE = StackAPI('stackoverflow')
-questions = SITE.fetch('search/advanced', title = title_search_string)
-print(questions)
-"""
