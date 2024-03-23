@@ -1,11 +1,13 @@
 import random
 import sys
-from texttospeach import *
+
 from query import *
 
 speechmode=True
 if "--cli" in  sys.argv:
-        speechmode=False
+    speechmode=False
+else:
+    from texttospeach import *
 
 def output(text):
     print(text)
