@@ -16,9 +16,9 @@ def output(text):
 # Define a function to greet the user
 def greet():
     greetings = ["Hi there!", "Hey!", "Good morning!","Good afternoon!",
-"Greetings!","Howdy!","What's up?","Yo!","Hiya!","Salutations!","How's it going?",
-"Well met!","Hi, how are you?","Hello there!","Hey, what's happening?","How are you doing?",
-"What's new?","Hi, how's your day?"]
+                "Greetings!","Howdy!","What's up?","Yo!","Hiya!","Salutations!","How's it going?",
+                "Well met!","Hi, how are you?","Hello there!","Hey, what's happening?","How are you doing?",
+                "What's new?","Hi, how's your day?","Bonjour!","Ciao!"]
     greet_msg = random.choice(greetings)
     output(greet_msg)
 
