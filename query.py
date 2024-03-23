@@ -9,7 +9,7 @@ def __queryTest(query: str) -> str:
     data = response_API.text
     parse_json = json.loads(data)
     active_case = parse_json['Andaman and Nicobar Islands']['districtData']['South Andaman']['active']
-    return ("Active cases in South Andaman:", active_case)
+    return "Active cases in South Andaman:" + active_case
 #queryTest
 
 def __queryStack(query: str) -> str:
