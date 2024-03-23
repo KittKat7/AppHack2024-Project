@@ -2,7 +2,7 @@ import requests, json
 
 def query(query: str) -> str:
     print(query)
-    return __queryStack(query)
+    return __queryTest(query)
 #query
 
 def __queryTest(query: str) -> str:
