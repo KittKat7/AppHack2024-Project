@@ -1,15 +1,15 @@
 import random
 import sys
+speechmode = True
+if "--cli" in sys.argv:
+    speechmode = False
+    sys.argv.remove("--cli")
+else:
+    from texttospeach import *
 import microphone
 import os
 
 from query import *
-
-speechmode = True
-if "--cli" in sys.argv:
-    speechmode = False
-else:
-    from texttospeach import *
 
 def getSpeachInput():
     return microphone.mic().getSpeach()
