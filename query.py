@@ -7,12 +7,16 @@ dbInInit: bool = False
 
 def query(query: str) -> str:
 	global dbInInit
+	output = ""
 	if not dbInInit:
 		db.initdb()
 	if "define" in query:
 		term = query[len("define "):]
-		return queryUrban(term)
-	return queryStack(query)
+		output = queryUrban(term)
+	output = queryStack(query)
+	if output is None:
+		output = "ERROR 404 - No output found"
+	return output
 #query
 
 def __queryTest(query: str) -> str:
