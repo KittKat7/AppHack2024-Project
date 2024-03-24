@@ -11,7 +11,7 @@ else:
 
 
 def output(text):
-    print("Nebula: " + text)
+    print("Nebula:\t" + text)
     if speechmode:
         speak(text)
 
@@ -36,7 +36,7 @@ def respond_to_user_input(user_input):
 def main():
     greet()
     while True:
-        user_input = input("You: ").lower()
+        user_input = input("You:\t").lower()
         respond_to_user_input(user_input)
 
 
