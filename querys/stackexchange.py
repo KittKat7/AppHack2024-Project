@@ -72,7 +72,8 @@ def __queryQuestion(query: str):
 		# 	content = f.read()
 		print("QUESTION REQUEST")
 		db.insertQuery(query)
-		request = requests.get(f'https://api.stackexchange.com/2.3/similar?order=desc&sort=activity&title={query}&site=stackoverflow&filter=!nNPvSNPI7A&key={key}')
+		request = requests.get(f'https://api.stackexchange.com/2.3/similar?fromdate=1081036800&order=desc&sort=relevance&title={query}&site=stackoverflow&filter=!nNPvSNPI7A&key={key}')
+		# request = requests.get(f'https://api.stackexchange.com/2.3/similar?order=desc&sort=activity&title={query}&site=stackoverflow&filter=!nNPvSNPI7A&key={key}')
 		parse_json = json.loads(request.text)
 		print(f"Remaining API Quota: {parse_json['quota_remaining']}")
 		question = parse_json['items'][0] if len(parse_json['items']) > 0 else None
