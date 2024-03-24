@@ -55,7 +55,7 @@ class Microphone:
         device_info = sd.query_devices(args.device, "input")
         # soundfile expects an int, sounddevice provides a float:
         
-        args.samplerate = 8 * int(device_info["default_samplerate"])
+        args.samplerate = 1 * int(device_info["default_samplerate"])
         
     if args.model is None:
         model = Model(lang="en-us")
@@ -73,7 +73,7 @@ class Microphone:
     def passiveListen(self, stopWord):
         stopWord = stopWord.lower()
 
-        with sd.RawInputStream(samplerate=self.args.samplerate, blocksize = 64000, device=self.args.device,
+        with sd.RawInputStream(samplerate=self.args.samplerate, blocksize = 80, device=self.args.device,
             dtype="int16", channels=1, callback=self.callback):
 
                 loop_continue = True
@@ -93,7 +93,7 @@ class Microphone:
 
         
     def getSpeach(self):
-            with sd.RawInputStream(samplerate=self.args.samplerate, blocksize = 64000, device=self.args.device,
+            with sd.RawInputStream(samplerate=self.args.samplerate, blocksize = 80 , device=self.args.device,
             dtype="int16", channels=1, callback=self.callback):
 
                 loop_continue = True
