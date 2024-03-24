@@ -1,8 +1,18 @@
-import requests, json
+import json, requests
+import database as db
 from querys.stackexchange import *
+from querys.urbandictonary import *
+
+dbInInit: bool = False
 
 def query(query: str) -> str:
-	return __queryTest(query)
+	global dbInInit
+	if not dbInInit:
+		db.initdb()
+	if "define" in query:
+		term = query[len("define "):]
+		return queryUrban(term)
+	return queryStack(query)
 #query
 
 def __queryTest(query: str) -> str:
@@ -15,4 +25,4 @@ def __queryTest(query: str) -> str:
 
 
 if __name__ == "__main__":
-    print(query("hi"))
+	print(query("hi"))
