@@ -25,7 +25,7 @@ def queryUrban(word):
        return (f"Definition from database: {definition}")
     else:
         definition = __search_urban_dictionary(word)
-        db.insertDefintion(word, definition)
+        db.insertDefinition(word, definition)
         return (definition)
 
 
