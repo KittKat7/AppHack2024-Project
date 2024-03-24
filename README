@@ -1,7 +1,5 @@
 # AppHack 2024 Project: Team ...
 
-THIS PROJECT IS NOT OPEN SOURCE AS OF NOW
-
 PLAN:
 Make a voice assistant that searches StackOverflow, finds a relevent question, and response with the most upvoted(?) answer.
 Program this in Python.
