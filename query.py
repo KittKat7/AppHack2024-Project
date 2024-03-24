@@ -15,7 +15,7 @@ def query(query: str) -> str:
 	if "define" in query:
 		term = query[len("define "):]
 		output = queryUrban(term)
-	elif "current weather" in query:
+	elif query.startswith("current weather"):
 		city = query[len("current weather "):]
 		if len(city) == 0: city = None 
 		output = queryWeather(city)
