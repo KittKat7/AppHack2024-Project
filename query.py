@@ -1,4 +1,4 @@
-import json, requests
+import json, requests, random
 import database as db
 from querys.stackexchange import *
 from querys.urbandictonary import *
@@ -6,7 +6,36 @@ from querys.weather import *
 from querys.jokes import *
 from querys.news import *
 from querys.youtube import *
+from querys.about import *
 
+greetings = [
+	"hello",
+	"hi",
+	"hey",
+	"yo",
+	"hiya",
+	"howdy",
+	"what's up",
+	"greetings",
+	"good morning",
+	"good afternoon",
+	"good evening",
+	"hi there",
+	"hey there",
+	"hello there",
+	"sup",
+	"morning",
+	"afternoon",
+	"evening",
+	"hola",
+	"ciao"
+]
+
+def __activates(query: str, keys: list[str]):
+	for key in keys:
+		if query.startswith(key):
+			return True
+	return False
 
 dbInInit: bool = False
 
@@ -17,7 +46,9 @@ def query(query: str) -> str:
 	output = ""
 	if not dbInInit:
 		db.initdb()
-	if query.startswith("define"):
+	if __activates(query, greetings):
+		output = queryGreeting()
+	elif query.startswith("define"):
 		term = query[len("define "):]
 		output = queryUrban(term)
 	elif query.startswith("current weather"):
@@ -33,13 +64,20 @@ def query(query: str) -> str:
 	elif query.startswith("play "):
 		video = query[len("play "):]
 		output = queryYoutube(video)
-
+	elif __activates(query, aboutKeywords):
+		output = queryAbout()
 	else:
 		output = queryStack(query)
 	if output is None:
 		output = "ERROR 404 - No output found"
 	return output
 #query
+
+def queryGreeting() -> str:
+	greetings = ["Hi there!", "Hey!", "Good morning!", "Good afternoon!",
+				"Greetings!", "Howdy!", "What's up?", "Yo!", "Hiya!", "Salutations!",
+				"Well met!", "Hello there!", "Yer", "What's new?", "Bonjour!", "Ciao!"]
+	return random.choice(greetings)
 
 def __queryTest(query: str) -> str:
 	response_API = requests.get('https://api.covid19india.org/state_district_wise.json')

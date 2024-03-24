@@ -1,4 +1,3 @@
-import random
 import sys
 import os
 from query import *
@@ -44,10 +43,7 @@ def output(text):
 
 # Define a function to greet the user
 def greet():
-    greetings = ["Hi there!", "Hey!", "Good morning!", "Good afternoon!",
-                 "Greetings!", "Howdy!", "What's up?", "Yo!", "Hiya!", "Salutations!",
-                 "Well met!", "Hello there!", "Yer", "What's new?", "Bonjour!", "Ciao!"]
-    greet_msg = random.choice(greetings)
+    greet_msg = queryGreeting()
     output(greet_msg)
 
 
