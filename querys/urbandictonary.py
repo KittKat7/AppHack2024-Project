@@ -1,10 +1,8 @@
 import requests
 import database as db
 
-# Function to search the database for a word
 def __search_database(word):
     return db.queryDefinition(word)
-
 
 def __search_urban_dictionary(word):
     url = f"https://api.urbandictionary.com/v0/define?term={word}"
@@ -18,7 +16,6 @@ def __search_urban_dictionary(word):
     else:
         return "Failed to retrieve data from Urban Dictionary."
 
-# Main function to search for a word
 def queryUrban(word):
     definition = __search_database(word)
     if definition is not None:
@@ -27,6 +24,3 @@ def queryUrban(word):
         definition = __search_urban_dictionary(word)
         db.insertDefinition(word, definition)
         return (definition)
-
-# db.initdb()
-# print(queryUrban("RINGO STARR"))
