@@ -2,6 +2,7 @@ import random
 import sys
 import os
 from query import *
+import globals as globals
 
 if "--cli" in sys.argv:
     sys.argv.append("--cli-in")
@@ -20,6 +21,13 @@ if "--cli-in" in sys.argv:
     sys.argv.remove("--cli-in")
 else:
     import microphone
+
+if "--force-api" in sys.argv:
+    globals.force_api_usage = True
+    sys.argv.remove("--force-api")
+    print("FORCING API")
+else:
+    globals.force_api_usage = False
 
 
 def getSpeachInput():

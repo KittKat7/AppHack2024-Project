@@ -1,7 +1,7 @@
 import json, requests
 import database as db
 from bs4 import BeautifulSoup
-
+import globals as globals
 
 key = ""
 try:
@@ -62,12 +62,12 @@ def queryStack(query: str) -> str:
 	question_body = question['body']
 	if answer_body is None:
 		answer_body = "Unable to find an answer"
-	return f"TITLE: {remove_tags(question_title)}\nQUESTION: {remove_tags(question_body)}\nANSWER: {remove_tags(answer_body)}"
+	return f"TITLE: {remove_tags(question_title)}\nQUESTION: {remove_tags(question_body)}\n\nANSWER: {remove_tags(answer_body)}"
 #queryStack
 
 def __queryQuestion(query: str):
 	rows = db.queryQuestions(query)
-	if rows is None or not db.hasQueried(query):
+	if (rows is None or not db.hasQueried(query)) or globals.force_api_usage:
 		# with open("examplequery.json", encoding="utf-8") as f:
 		# 	content = f.read()
 		print("QUESTION REQUEST")
@@ -75,10 +75,16 @@ def __queryQuestion(query: str):
 		request = requests.get(f'https://api.stackexchange.com/2.3/similar?order=desc&sort=activity&title={query}&site=stackoverflow&filter=!nNPvSNPI7A&key={key}')
 		parse_json = json.loads(request.text)
 		print(f"Remaining API Quota: {parse_json['quota_remaining']}")
+		question = parse_json['items'][0] if len(parse_json['items']) > 0 else None
+		if question == None:
+			return None
+		rows = [(question['question_id'], question['title'], question['body'], question['link'], question['score'], question['answer_count'], question['is_answered'])]
 		for question in parse_json['items']:
 			db.insertQuestion(question['question_id'], question['title'], question['body'], question['link'], question['score'], question['answer_count'], question['is_answered'], question['tags'])
 
-	rows = db.queryQuestions(query)
+	if not globals.force_api_usage:
+		rows = db.queryQuestions(query)
+
 	if rows is None:
 		return None
 	questions = {}
@@ -103,20 +109,23 @@ def __queryQuestion(query: str):
 	if len(list(relevence)) == 0:
 		return None
 
-	# mostrelevent = None
-	# for q in relevence:
-	# 	if (mostrelevent is None or relevence[q] > relevence[mostrelevent]) and questions[q]['answered']:
-	# 		mostrelevent = q
-	# if mostrelevent is None:
-	# 	for q in relevence:
-	# 		if (mostrelevent is None or relevence[q] > relevence[mostrelevent]) and questions[q]['answers'] > 0:
-	# 			mostrelevent = q
-	# if mostrelevent is None:
-	# 	for q in relevence:
-	# 		if (mostrelevent is None or relevence[q] > relevence[mostrelevent]):
-	# 			mostrelevent = q
+	mostrelevent = None
+	for q in relevence:
+		if mostrelevent is None and questions[q]['answered']:
+			mostrelevent = q
+			break
+	if mostrelevent is None:
+		for q in relevence:
+			if mostrelevent is None and questions[q]['answers'] > 0:
+				mostrelevent = q
+				break
+	if mostrelevent is None:
+		for q in relevence:
+			if mostrelevent is None:
+				mostrelevent = q
+				break
 
-	return questions[relevence[0]]
+	return questions[mostrelevent]
 #__queryQuestions
 
 def __queryAnswer(query: int):
