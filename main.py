@@ -1,5 +1,7 @@
 import random
 import sys
+import microphone
+import os
 
 from query import *
 
@@ -9,6 +11,11 @@ if "--cli" in sys.argv:
 else:
     from texttospeach import *
 
+def getSpeachInput():
+    return microphone.mic().getSpeach()
+
+def passiveListen(wakeWord):
+    microphone.mic().passiveListen(wakeWord)
 
 def output(text):
     print("Nebula: " + text)
@@ -36,7 +43,14 @@ def respond_to_user_input(user_input):
 def main():
     greet()
     while True:
-        user_input = input("You: ").lower()
+        #waits for wake up
+        passiveListen("Nebula")
+        output("yes?")
+
+        #gets prompt
+        user_input = getSpeachInput().lower()
+        print(user_input)
+
         respond_to_user_input(user_input)
 
 
