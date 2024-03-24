@@ -86,7 +86,3 @@ def __queryTest(query: str) -> str:
 	active_case = parse_json['Andaman and Nicobar Islands']['districtData']['South Andaman']['active']
 	return "Active cases in South Andaman: " + str(active_case)
 #queryTest
-
-
-if __name__ == "__main__":
-	print(query("hi"))
