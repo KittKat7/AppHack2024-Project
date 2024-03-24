@@ -13,7 +13,8 @@ def query(query: str) -> str:
 	if "define" in query:
 		term = query[len("define "):]
 		output = queryUrban(term)
-	output = queryStack(query)
+	else:
+		output = queryStack(query)
 	if output is None:
 		output = "ERROR 404 - No output found"
 	return output
