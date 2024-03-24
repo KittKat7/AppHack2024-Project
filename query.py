@@ -4,6 +4,7 @@ from querys.stackexchange import *
 from querys.urbandictonary import *
 from querys.weather import *
 from querys.jokes import *
+from querys.news import *
 
 
 dbInInit: bool = False
@@ -23,6 +24,9 @@ def query(query: str) -> str:
 		output = queryWeather(city)
 	elif query.startswith("tell me a joke"):
 		output = queryJoke()
+	elif query.startswith("news on"):
+		topic = query[len("news on "):]
+		output = queryNews(topic)
 	else:
 		output = queryStack(query)
 	if output is None:
