@@ -17,7 +17,8 @@ def query(query: str) -> str:
 		output = queryUrban(term)
 	elif query.startswith("current weather"):
 		city = query[len("current weather "):]
-		if len(city) == 0: city = None 
+		if len(city) == 0:
+			city = None
 		output = queryWeather(city)
 	else:
 		output = queryStack(query)
