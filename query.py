@@ -35,8 +35,8 @@ greetings = [
 def __activates(query: str, keys: list[str]):
 	for key in keys:
 		if query.startswith(key):
-			return True
-	return False
+			return query[len(key):]
+	return None
 
 dbInInit: bool = False
 
@@ -53,7 +53,7 @@ def query(query: str) -> str:
 	if __activates(query, greetings):
 		output = queryGreeting()
 	elif __activates(query, defineKeywords):
-		term = query[len("define "):]
+		term = __activates(query, defineKeywords)
 		output = queryWiktionary(term)
 	elif query.startswith("urban"):
 		term = query[len("urban "):]
