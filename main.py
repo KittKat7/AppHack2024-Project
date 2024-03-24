@@ -61,11 +61,12 @@ def get_input():
     if speechin:
         passiveListen("Nebula")
         output("yes?")
-
+        user_input = getSpeachInput().lower()
+        print(f"You: {user_input}")
         #gets prompt
-        return getSpeachInput().lower()
+        return user_input
     else:
-        return input("Prompt: ")
+        return input("Prompt: ").lower()
 
 # Main function to run the virtual assistant
 def main():
@@ -73,7 +74,6 @@ def main():
     while True:
         #waits for wake up
         user_input = get_input()
-        print(user_input)
 
         #user_input = input("You:\t").lower()
         respond_to_user_input(user_input)
