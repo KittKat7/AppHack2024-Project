@@ -5,6 +5,7 @@ from querys.urbandictonary import *
 from querys.weather import *
 from querys.jokes import *
 from querys.news import *
+from querys.youtube import *
 
 
 dbInInit: bool = False
@@ -27,6 +28,10 @@ def query(query: str) -> str:
 	elif query.startswith("news on"):
 		topic = query[len("news on "):]
 		output = queryNews(topic)
+	elif query.startswith("play "):
+		video = query[len("play "):]
+		output = queryYoutube(video)
+
 	else:
 		output = queryStack(query)
 	if output is None:
