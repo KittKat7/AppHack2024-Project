@@ -2,6 +2,11 @@ import json, requests
 import database as db
 from querys.stackexchange import *
 from querys.urbandictonary import *
+from querys.weather import *
+from querys.jokes import *
+from querys.news import *
+from querys.youtube import *
+
 
 dbInInit: bool = False
 
@@ -10,9 +15,23 @@ def query(query: str) -> str:
 	output = ""
 	if not dbInInit:
 		db.initdb()
-	if "define" in query:
+	if query.startswith("define"):
 		term = query[len("define "):]
 		output = queryUrban(term)
+	elif query.startswith("current weather"):
+		city = query[len("current weather "):]
+		if len(city) == 0:
+			city = None
+		output = queryWeather(city)
+	elif query.startswith("tell me a joke"):
+		output = queryJoke()
+	elif query.startswith("news on"):
+		topic = query[len("news on "):]
+		output = queryNews(topic)
+	elif query.startswith("play "):
+		video = query[len("play "):]
+		output = queryYoutube(video)
+
 	else:
 		output = queryStack(query)
 	if output is None:

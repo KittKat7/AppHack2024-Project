@@ -18,7 +18,7 @@ def passiveListen(wakeWord):
     microphone.mic().passiveListen(wakeWord)
 
 def output(text):
-    print("Nebula: " + text)
+    print("Nebula:\t" + text)
     if speechmode:
         speak(text)
 
@@ -51,6 +51,7 @@ def main():
         user_input = getSpeachInput().lower()
         print(user_input)
 
+        #user_input = input("You:\t").lower()
         respond_to_user_input(user_input)
 
 

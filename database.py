@@ -19,6 +19,12 @@ def initdb():
 				)
 				''')
 	cursor.execute('''
+				CREATE TABLE IF NOT EXISTS query
+				(
+				query TEXT PRIMARY KEY
+				)
+				''')
+	cursor.execute('''
 				CREATE TABLE IF NOT EXISTS tag
 				(
 				tag TEXT PRIMARY KEY
@@ -54,6 +60,12 @@ def initdb():
 				''')
 	connection.commit()
 #initdb
+	
+def insertQuery(query: str):
+	global connection
+	global cursor
+	cursor.execute("INSERT OR IGNORE INTO query (query) VALUES (?)", (query,))
+	connection.commit()
 
 def insertQuestion(id: int, title: str, link: str, score: int, answered: bool, tags: list[str]):
 	global connection
@@ -74,10 +86,20 @@ def insertAnswer(id: int, question: int, body: str, score: int, accepted: bool):
 	connection.commit()
 #insertAnswer
 
-def queryQuestions(q: str):
+def hasQueried(query):
+	global connection
+	global cursor
+	cursor.execute("SELECT * FROM query WHERE query = ?", (query,))
+	queries = cursor.fetchall()
+	hasQueried: bool = True if len(queries) > 0 else False
+	connection.commit()
+	return hasQueried
+
+def queryQuestions(query: str):
 	global connection
 	global cursor
 	rows: list = []
+	q = query.split(" ")
 	for key in q:
 		cursor.execute("""
 		SELECT *
@@ -87,8 +109,25 @@ def queryQuestions(q: str):
 		nrows = cursor.fetchall()
 		for r in nrows:
 			rows.append(r)
+
+	connection.commit()
+
 	return rows if len(rows) > 0 else None
 #queryQuestions
+
+def queryAnswers(question_id: int):
+	global connection
+	global cursor
+	rows: list = []
+	cursor.execute("""
+	SELECT *
+	FROM answer
+	WHERE question = ?
+	""", (question_id,))
+	rows = cursor.fetchall()
+	connection.commit()
+	return rows if len(rows) > 0 else None
+#queryAnswers
 
 def queryDefinition(word: str) -> str:
 	global connection
