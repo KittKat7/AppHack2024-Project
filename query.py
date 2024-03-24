@@ -12,7 +12,7 @@ def query(query: str) -> str:
 	output = ""
 	if not dbInInit:
 		db.initdb()
-	if "define" in query:
+	if query.startswith("define"):
 		term = query[len("define "):]
 		output = queryUrban(term)
 	elif query.startswith("current weather"):
