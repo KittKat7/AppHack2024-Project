@@ -1,10 +1,6 @@
 import requests
-import database as db
 
-def __search_database(word):
-    return db.queryDefinition(word)
-
-def __search_urban_dictionary(word):
+def queryUrban(word):
     url = f"https://api.urbandictionary.com/v0/define?term={word}"
     response = requests.get(url)
     if response.status_code == 200:
@@ -15,12 +11,3 @@ def __search_urban_dictionary(word):
             return "No definitions found for this term."
     else:
         return "Failed to retrieve data from Urban Dictionary."
-
-def queryUrban(word):
-    definition = __search_database(word)
-    if definition is not None:
-        return (f"Definition from database: {definition}")
-    else:
-        definition = __search_urban_dictionary(word)
-        db.insertDefinition(word, definition)
-        return (definition)

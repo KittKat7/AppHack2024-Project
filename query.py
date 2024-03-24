@@ -7,6 +7,7 @@ from querys.jokes import *
 from querys.news import *
 from querys.youtube import *
 from querys.about import *
+from querys.wiktionary import *
 
 greetings = [
 	"hello",
@@ -50,6 +51,9 @@ def query(query: str) -> str:
 		output = queryGreeting()
 	elif query.startswith("define"):
 		term = query[len("define "):]
+		output = queryWiktionary(term)
+	elif query.startswith("urban"):
+		term = query[len("urban "):]
 		output = queryUrban(term)
 	elif query.startswith("current weather"):
 		city = query[len("current weather "):]
