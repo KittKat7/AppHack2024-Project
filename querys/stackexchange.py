@@ -11,6 +11,31 @@ def queryStack(query: str) -> str:
 			db.insertQuestion(question['question_id'], question['title'], question['link'], question['score'], question['is_answered'], question['tags'])
 
 	rows = db.queryQuestions(query)
+	questions = {}
+	relevence = {}
+	for row in rows:
+		questions[row[1]] = {'id': row[0], 'title': row[1], 'link': row[2], 'score': row[3], 'answered': row[4]}
+		title = row[1]
+		for word in query:
+			if word in title:
+				if title in list(relevence.keys()):
+					relevence[title] = relevence[title] + 1
+				else:
+					relevence[title] = 1
+	print(relevence)
+	return None
+
+	for question in parse_json['items']:
+		title = str(question['title'])
+		for key in keywords:
+			if key in title:
+				if title not in list(questions.keys()):
+					questions[title] = 1
+				else:
+					questions[title] = questions[title] + 1
+
+
+	return rows
 	# print(rows)
 	return
 	for question in parse_json['items']:
