@@ -7,7 +7,7 @@ from querys.jokes import *
 from querys.news import *
 from querys.youtube import *
 from querys.about import *
-from querys.wiktionary import *
+from querys.pydictionary import *
 
 greetings = [
 	"hello",
