@@ -14,9 +14,11 @@ def query(query: str) -> str:
 		db.initdb()
 	if "define" in query:
 		term = query[len("define "):]
-		output=queryUrban(term)
-	if "current weather" in query:
-		output= queryWeather()
+		output = queryUrban(term)
+	elif "current weather" in query:
+		city = query[len("current weather "):]
+		if len(city) == 0: city = None 
+		output = queryWeather(city)
 	else:
 		output = queryStack(query)
 	if output is None:
