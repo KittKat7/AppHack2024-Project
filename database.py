@@ -61,7 +61,7 @@ def insertQuestion(id: int, title: str, link: str, score: int, answered: bool, t
 	answered: bool = 1 if answered else 0
 	cursor.execute("INSERT OR IGNORE INTO question (id, title, link, score, answered) VALUES (?, ?, ?, ?, ?)", (id, title, link, score, answered))
 	for tag in tags:
-		cursor.execute("INSERT OR IGNORE INTO tag (tag) VALUES (?)", (tag))
+		cursor.execute("INSERT OR IGNORE INTO tag (tag) VALUES (?)", (tag,))
 		cursor.execute("INSERT OR IGNORE INTO hasTag (question, tag) VALUES (?, ?)", (id, tag))
 	connection.commit()
 #insertQuestion
