@@ -82,7 +82,7 @@ class Microphone:
                     data = self.q.get()
                     if self.rec.AcceptWaveform(data):
                         words = self.rec.Result().strip("{\n  \"text\" : \"").rstrip("\"\n}")
-                        if words == stopWord:
+                        if words == stopWord or words.startswith(stopWord):
                             loop_continue = False
                     else:
                         words = self.rec.PartialResult()#.strip("{\n  \"partial\" : \"").rstrip("\"\n}")
