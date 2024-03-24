@@ -4,7 +4,7 @@ import database as db
 def queryStack(query: str) -> str:
 	rows = db.queryQuestions(query)
 	if rows is None:
-		with open("examplequery.json") as f:
+		with open("examplequery.json", encoding="utf-8") as f:
 			content = f.read()
 		parse_json = json.loads(content)
 		for question in parse_json['items']:
