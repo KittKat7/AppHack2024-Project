@@ -2,6 +2,8 @@ import json, requests
 import database as db
 from querys.stackexchange import *
 from querys.urbandictonary import *
+from querys.weather import *
+
 
 dbInInit: bool = False
 
@@ -12,7 +14,9 @@ def query(query: str) -> str:
 		db.initdb()
 	if "define" in query:
 		term = query[len("define "):]
-		output = queryUrban(term)
+		output=queryUrban(term)
+	if "current weather" in query:
+		output= queryWeather()
 	else:
 		output = queryStack(query)
 	if output is None:

@@ -22,10 +22,11 @@ def __search_urban_dictionary(word):
 def queryUrban(word):
     definition = __search_database(word)
     if definition is not None:
-       return (f"Definition from database: {definition}")
+        return (f"Definition from database: {definition}")
     else:
         definition = __search_urban_dictionary(word)
         db.insertDefinition(word, definition)
         return (definition)
 
-
+# db.initdb()
+# print(queryUrban("RINGO STARR"))

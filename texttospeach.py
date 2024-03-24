@@ -12,3 +12,5 @@ def speak(message):
     engine.say(message)
     engine.runAndWait()
 
+
+
