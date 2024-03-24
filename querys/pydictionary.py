@@ -14,9 +14,9 @@ def __search_api(word):
 	return ret
 
 def queryWiktionary(word):
-	definition = None #__search_database(word)
+	definition = __search_database(word)
 	if definition is not None:
-		return (f"Definition from database: {definition}")
+		return (f"Definition from local database: {definition[1]}")
 	else:
 		definition = __search_api(word)
 		db.insertDefinition(word, definition)
