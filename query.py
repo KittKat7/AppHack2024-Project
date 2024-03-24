@@ -3,6 +3,7 @@ import database as db
 from querys.stackexchange import *
 from querys.urbandictonary import *
 from querys.weather import *
+from querys.jokes import *
 
 
 dbInInit: bool = False
@@ -20,6 +21,8 @@ def query(query: str) -> str:
 		if len(city) == 0:
 			city = None
 		output = queryWeather(city)
+	elif query.startswith("tell me a joke"):
+		output = queryJoke()
 	else:
 		output = queryStack(query)
 	if output is None:
