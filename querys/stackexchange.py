@@ -68,10 +68,11 @@ def __queryQuestion(query: str):
 
 def __queryAnswer(query: int):
 	rows = db.queryAnswers(query)
-	if rows is None:
+	if rows is None and not db.hasQueried(query):
 		# with open("example_answers.json", encoding="utf-8") as f:
 		# 	content = f.read()
 		print("ANSWER REQUEST")
+		db.insertQuery(query)
 		request = requests.get(f'https://api.stackexchange.com/2.3/questions/{query}/answers?order=desc&sort=activity&site=stackoverflow&filter=withbody')
 		parse_json = json.loads(request.text)
 		for question in parse_json['items']:
