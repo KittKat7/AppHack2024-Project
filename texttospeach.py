@@ -3,7 +3,7 @@ import pyttsx3
 # Initialize the text-to-speech engine
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
-engine.setProperty('rate',250)  # Set the rate of speech (words per minute)
+engine.setProperty('rate',200)  # Set the rate of speech (words per minute)
 engine.setProperty('voices', voices[1].id)  # Index 1 usually corresponds to a female voice
 
 

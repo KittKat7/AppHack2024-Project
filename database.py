@@ -13,8 +13,10 @@ def initdb():
 				(
 				id INTEGER PRIMARY KEY,
 				title TEXT,
+				body TEXT,
 				link TEXT,
 				score INTEGER,
+				answers INTEGER,
 				answered INTEGER
 				)
 				''')
@@ -67,11 +69,11 @@ def insertQuery(query: str):
 	cursor.execute("INSERT OR IGNORE INTO query (query) VALUES (?)", (query,))
 	connection.commit()
 
-def insertQuestion(id: int, title: str, link: str, score: int, answered: bool, tags: list[str]):
+def insertQuestion(id: int, title: str, body: str, link: str, score: int, answers: int, answered: bool, tags: list[str]):
 	global connection
 	global cursor
 	answered: bool = 1 if answered else 0
-	cursor.execute("INSERT OR IGNORE INTO question (id, title, link, score, answered) VALUES (?, ?, ?, ?, ?)", (id, title, link, score, answered))
+	cursor.execute("INSERT OR IGNORE INTO question (id, title, body, link, score, answers, answered) VALUES (?, ?, ?, ?, ?, ?, ?)", (id, title, body, link, score, answers, answered))
 	for tag in tags:
 		cursor.execute("INSERT OR IGNORE INTO tag (tag) VALUES (?)", (tag,))
 		cursor.execute("INSERT OR IGNORE INTO hasTag (question, tag) VALUES (?, ?)", (id, tag))
@@ -104,12 +106,11 @@ def queryQuestions(query: str):
 		cursor.execute("""
 		SELECT *
 		FROM question
-		WHERE title LIKE '%' || ? || '%'
+		WHERE body LIKE '%' || ? || '%'
 		""", (key,))
 		nrows = cursor.fetchall()
 		for r in nrows:
 			rows.append(r)
-
 	connection.commit()
 
 	return rows if len(rows) > 0 else None

@@ -11,6 +11,8 @@ from querys.youtube import *
 dbInInit: bool = False
 
 def query(query: str) -> str:
+	if len(query.strip()) == 0:
+		return ""
 	global dbInInit
 	output = ""
 	if not dbInInit:

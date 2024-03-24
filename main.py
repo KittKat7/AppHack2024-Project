@@ -1,15 +1,26 @@
 import random
 import sys
-speechmode = True
+import os
+from query import *
+
 if "--cli" in sys.argv:
-    speechmode = False
+    sys.argv.append("--cli-in")
+    sys.argv.append("--cli-out")
     sys.argv.remove("--cli")
+
+speechout = True
+if "--cli-out" in sys.argv:
+    speechout = False
+    sys.argv.remove("--cli-out")
 else:
     from texttospeach import *
-import microphone
-import os
+speechin = True
+if "--cli-in" in sys.argv:
+    speechin = False
+    sys.argv.remove("--cli-in")
+else:
+    import microphone
 
-from query import *
 
 def getSpeachInput():
     return microphone.mic().getSpeach()
@@ -19,7 +30,7 @@ def passiveListen(wakeWord):
 
 def output(text):
     print("Nebula:\t" + text)
-    if speechmode:
+    if speechout:
         speak(text)
 
 
@@ -38,17 +49,22 @@ def respond_to_user_input(user_input):
     output(response)
     return
 
+def get_input():
+    if speechin:
+        passiveListen("Nebula")
+        output("yes?")
+
+        #gets prompt
+        return getSpeachInput().lower()
+    else:
+        return input("Prompt: ")
 
 # Main function to run the virtual assistant
 def main():
     greet()
     while True:
         #waits for wake up
-        passiveListen("Nebula")
-        output("yes?")
-
-        #gets prompt
-        user_input = getSpeachInput().lower()
+        user_input = get_input()
         print(user_input)
 
         #user_input = input("You:\t").lower()
