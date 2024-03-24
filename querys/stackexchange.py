@@ -77,6 +77,7 @@ def __queryAnswer(query: int):
 		parse_json = json.loads(request.text)
 		for question in parse_json['items']:
 			db.insertAnswer(question['answer_id'], question['question_id'], question['body'], question['score'], question['is_accepted'])
+		print(rows["quota_remaining"])
 
 	rows = db.queryAnswers(query)
 	if rows is None:
