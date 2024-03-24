@@ -40,7 +40,10 @@ def __activates(query: str, keys: list[str]):
 
 dbInInit: bool = False
 
+previous_response = ""
+
 def query(query: str) -> str:
+	global previous_response
 	if len(query.strip()) == 0:
 		return ""
 	global dbInInit
@@ -70,10 +73,15 @@ def query(query: str) -> str:
 		output = queryYoutube(video)
 	elif __activates(query, aboutKeywords):
 		output = queryAbout()
+	elif query.startswith("repeat"):
+		return previous_response
+	elif query.startswith("say"):
+		output = query[len("say "):]
 	else:
 		output = queryStack(query)
 	if output is None:
 		output = "ERROR 404 - No output found"
+	previous_response = output
 	return output
 #query
 
