@@ -2,6 +2,27 @@ import requests, json
 import database as db
 from PyDictionary import PyDictionary
 
+defineKeywords = [
+	"he fine",
+	"define",
+	"fine",
+	"feign",
+	"vine",
+	"line",
+	"shine",
+	"pine",
+	"dine",
+	"wine",
+	"mine",
+	"sign",
+	"rhine",
+	"thine",
+	"shrine",
+	"twine",
+	"whine",
+	"spine"
+]
+
 def __search_database(word):
 	return db.queryDefinition(word)
 

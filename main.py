@@ -56,7 +56,7 @@ def respond_to_user_input(user_input):
 def get_input():
     if speechin:
         passiveListen("Nebula")
-        output("yes?")
+        output("waiting...")
         user_input = getSpeachInput().lower()
         print(f"You: {user_input}")
         #gets prompt

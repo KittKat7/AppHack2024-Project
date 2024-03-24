@@ -52,7 +52,7 @@ def query(query: str) -> str:
 		db.initdb()
 	if __activates(query, greetings):
 		output = queryGreeting()
-	elif query.startswith("define"):
+	elif __activates(query, defineKeywords):
 		term = query[len("define "):]
 		output = queryWiktionary(term)
 	elif query.startswith("urban"):
